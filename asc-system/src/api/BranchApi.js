@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ip } from 'ip';
+import ip from './ip';
 
 const getBranch = (token, callback) => {
 	return axios

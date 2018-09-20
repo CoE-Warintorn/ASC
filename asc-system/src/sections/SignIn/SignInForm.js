@@ -40,7 +40,7 @@ class SignInForm extends Component {
 		const { value } = e.target;
 		this.setState({
 			...this.state,
-			[prop]: { value: value.toLowerCase() }
+			[prop]: { value }
 		});
 	};
 

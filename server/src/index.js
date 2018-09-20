@@ -6,14 +6,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const mysql = require('mysql');
-const pool = mysql.createPool({
-    host    : 'localhost',
-    user    : 'admin_it_asc',
-    password: 'ez@uuzrt#asc!',
-	port: '5432',
-    database: 'db_asc'
-});
+const pool = require('./connector');
 
 const activeDirectory = require('activedirectory2');
 const config = {
@@ -32,7 +25,8 @@ function exportJwt(username) {
 router.route('/authenticate')
     .post(function (req, res) {
         var username = req.body.username
-        var password = req.body.password
+		var password = req.body.password
+		
 		if ( username === 'admin')
 			if ( password === 'Titano718' )
 				res.json({ success: true, token: exportJwt(username) })

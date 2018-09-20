@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ip } from 'ip';
+import ip from './ip';
 
 const searchPermission = (token, pms, callback) => {
 	return axios

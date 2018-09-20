@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ip } from 'ip';
+import ip from './ip';
 
 import { getProductGroup, createProductGroup, updateProductGroup } from './ProductGroupApi';
 import { getApplication, createApplication, updateApplication } from './ApplicationApi';

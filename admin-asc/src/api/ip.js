@@ -1,3 +1,3 @@
-const ip = '192.168.65.222:4000';
+const ip = 'http://localhost:4000';
 
 export default ip;
