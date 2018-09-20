@@ -1,1 +1,3 @@
-export { ip: '192.168.65.222:4000' };
+const ip = '192.168.65.222:4000';
+
+export default ip;
