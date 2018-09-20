@@ -15,7 +15,7 @@ const styles = theme => ({
 });
 
 const UserSearchForm = ({ ...props }) => {
-	const { classes, search, handleOnChange, handleOnSelect, handleSearching } = props;
+	const { classes, search, handleOnChange, handleSearching } = props;
 
 	return (
 		<Grid container spacing={32} className={classes.root}>

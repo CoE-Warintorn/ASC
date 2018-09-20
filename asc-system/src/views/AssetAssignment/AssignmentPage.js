@@ -590,9 +590,6 @@ class AssignmentPage extends Component {
 									helperText={dialog.astCdHelperText}
 									value={dialog.astCd}
 									onChange={this.handleOnChange('dialog', 'astCd')}
-									inputProps={{
-										maxLength: 5
-									}}
 									InputProps={{
 										endAdornment: (
 											<InputAdornment position="end">

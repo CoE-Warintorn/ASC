@@ -28,7 +28,11 @@ import {
 } from '@material-ui/icons';
 
 import { Header } from '../../components';
-import { getApplication, createApplication, updateApplication } from '../../api';
+import {
+	getApplication,
+	createApplication,
+	updateApplication
+} from '../../api';
 
 import _ from 'lodash';
 
@@ -58,7 +62,12 @@ const styles = theme => ({
 	}
 });
 
-const tableHead = ['Application Code', 'Application Name', 'Active', 'Actions'];
+const tableHead = [
+	'Application Code',
+	'Application Name',
+	'Active',
+	'Actions'
+];
 
 class ApplicationsPage extends Component {
 	constructor(props) {
@@ -81,12 +90,15 @@ class ApplicationsPage extends Component {
 
 	componentDidMount() {
 		(async () => {
-			let appList = await getApplication(this.props.auth.token, (err, result) => {
-				if (err)
-					if (err === 'TimeOut') this.props.signout();
-					else alert(JSON.stringify(err));
-				else return result;
-			});
+			let appList = await getApplication(
+				this.props.auth.token,
+				(err, result) => {
+					if (err)
+						if (err === 'TimeOut') this.props.signout();
+						else alert(JSON.stringify(err));
+					else return result;
+				}
+			);
 			this.setState({
 				...this.state,
 				appList
@@ -118,7 +130,7 @@ class ApplicationsPage extends Component {
 	};
 
 	handleDialogOnCreate = () => {
-		const { appCd, appName, active } = this.state.dialog;
+		const { appCd, appName } = this.state.dialog;
 		if (appCd === undefined || appCd === '') {
 			this.setState({
 				...this.state,
@@ -151,14 +163,18 @@ class ApplicationsPage extends Component {
 						alert('Add Application Success!');
 						this.handleDialogToggle();
 						(async () => {
-							let appList = await getApplication(this.props.auth.token);
+							let appList = await getApplication(
+								this.props.auth.token
+							);
 							this.setState({
 								...this.state,
 								appList
 							});
 						})();
-					} else if (err === 'TimeOut') this.props.signout();
-					else if (err === 'Exist') alert('Application code already exists');
+					} else if (err === 'TimeOut')
+						this.props.signout();
+					else if (err === 'Exist')
+						alert('Application code already exists');
 					else alert(JSON.stringify(err));
 				}
 			);
@@ -168,7 +184,10 @@ class ApplicationsPage extends Component {
 	handleOpenEdit = name => {
 		this.setState({
 			...this.state,
-			editObj: _.find(this.state.appList, n => n.appCd === name)
+			editObj: _.find(
+				this.state.appList,
+				n => n.appCd === name
+			)
 		});
 	};
 
@@ -197,7 +216,9 @@ class ApplicationsPage extends Component {
 						return;
 					}
 				);
-				let appList = await getApplication(this.props.auth.token);
+				let appList = await getApplication(
+					this.props.auth.token
+				);
 				this.setState({
 					...this.state,
 					appList,
@@ -218,7 +239,10 @@ class ApplicationsPage extends Component {
 		const { classes } = this.props;
 
 		const headerButtons = (
-			<Button onClick={this.handleDialogToggle} className={classes.rightButton}>
+			<Button
+				onClick={this.handleDialogToggle}
+				className={classes.rightButton}
+			>
 				<AddIcon className={classes.icon} />
 				new Application
 			</Button>
@@ -226,19 +250,32 @@ class ApplicationsPage extends Component {
 
 		return (
 			<div className={classes.root}>
-				<Header pageTitle="Applications" rightButtons={headerButtons} signout={this.props.signout} />
-				<Dialog open={this.state.dialog.open} onClose={this.handleDialogToggle}>
+				<Header
+					pageTitle="Applications"
+					rightButtons={headerButtons}
+					signout={this.props.signout}
+				/>
+				<Dialog
+					open={this.state.dialog.open}
+					onClose={this.handleDialogToggle}
+				>
 					<DialogTitle>New Application</DialogTitle>
 					<DialogContent>
 						<TextField
 							margin="dense"
 							label="Application Code"
 							inputProps={{ maxLength: 5 }}
-							inputRef={input => (this.appCdInput = input)}
+							inputRef={input =>
+								(this.appCdInput = input)
+							}
 							value={this.state.dialog.appCd}
 							error={this.state.dialog.appCdError}
-							helperText={this.state.dialog.appCdHelperText}
-							onChange={this.handleDialogOnChange('appCd')}
+							helperText={
+								this.state.dialog.appCdHelperText
+							}
+							onChange={this.handleDialogOnChange(
+								'appCd'
+							)}
 							required
 							autoFocus
 						/>
@@ -246,101 +283,197 @@ class ApplicationsPage extends Component {
 						<TextField
 							margin="dense"
 							label="Application Name"
-							inputRef={input => (this.appNameInput = input)}
-							onChange={this.handleDialogOnChange('appName')}
+							inputRef={input =>
+								(this.appNameInput = input)
+							}
+							onChange={this.handleDialogOnChange(
+								'appName'
+							)}
 							value={this.state.dialog.appName}
 							error={this.state.dialog.appNameError}
-							helperText={this.state.dialog.appNameHelperText}
+							helperText={
+								this.state.dialog.appNameHelperText
+							}
 						/>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleDialogToggle} color="primary">
+						<Button
+							onClick={this.handleDialogToggle}
+							color="primary"
+						>
 							Cancel
 						</Button>
-						<Button onClick={this.handleDialogOnCreate} color="primary">
+						<Button
+							onClick={this.handleDialogOnCreate}
+							color="primary"
+						>
 							Create
 						</Button>
 					</DialogActions>
 				</Dialog>
 
-				<Grid container justify="center" className={classes.content}>
+				<Grid
+					container
+					justify="center"
+					className={classes.content}
+				>
 					<Grid item xs={12}>
 						<Grid container justify="center">
-							<Grid item xs={12} sm={10} md={8} className={classes.griditem}>
+							<Grid
+								item
+								xs={12}
+								sm={10}
+								md={8}
+								className={classes.griditem}
+							>
 								<div className={classes.toolbar} />
 								<Paper className={classes.table}>
 									<Table>
 										<TableHead>
 											<TableRow>
-												{tableHead.map((head, key) => <TableCell key={key}>{head}</TableCell>)}
+												{tableHead.map(
+													(head, key) => (
+														<TableCell
+															key={key}
+														>
+															{head}
+														</TableCell>
+													)
+												)}
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{this.state.appList.map((app, key) => (
-												<TableRow key={key}>
-													<TableCell>{app.appCd}</TableCell>
-													<TableCell>
-														{this.state.editObj.appCd === app.appCd ? (
-															<TextField
-																value={this.state.editObj.appName}
-																onChange={this.handleOnChangeEdit('appName')}
-																autoFocus
-															/>
-														) : (
-															app.appName
-														)}
-													</TableCell>
-													<TableCell>
-														{this.state.editObj.appCd === app.appCd ? (
-															<Switch
-																checked={this.state.editObj.active === 'y'}
-																onChange={this.handleOnChangeEdit(
-																	'active',
-																	this.state.editObj.active === 'y' ? 'n' : 'y'
-																)}
-															/>
-														) : (
-															<Switch checked={app.active === 'y'} />
-														)}
-													</TableCell>
-													<TableCell>
-														{this.state.editObj === '' ? (
-															<Tooltip title="Edit" placement="top">
-																<Button
-																	variant="fab"
-																	mini
-																	onClick={() => this.handleOpenEdit(app.appCd)}
+											{this.state.appList.map(
+												(app, key) => (
+													<TableRow
+														key={key}
+													>
+														<TableCell>
+															{
+																app.appCd
+															}
+														</TableCell>
+														<TableCell>
+															{this
+																.state
+																.editObj
+																.appCd ===
+															app.appCd ? (
+																<TextField
+																	value={
+																		this
+																			.state
+																			.editObj
+																			.appName
+																	}
+																	onChange={this.handleOnChangeEdit(
+																		'appName'
+																	)}
+																	autoFocus
+																/>
+															) : (
+																app.appName
+															)}
+														</TableCell>
+														<TableCell>
+															{this
+																.state
+																.editObj
+																.appCd ===
+															app.appCd ? (
+																<Switch
+																	checked={
+																		this
+																			.state
+																			.editObj
+																			.active ===
+																		'y'
+																	}
+																	onChange={this.handleOnChangeEdit(
+																		'active',
+																		this
+																			.state
+																			.editObj
+																			.active ===
+																		'y'
+																			? 'n'
+																			: 'y'
+																	)}
+																/>
+															) : (
+																<Switch
+																	checked={
+																		app.active ===
+																		'y'
+																	}
+																/>
+															)}
+														</TableCell>
+														<TableCell>
+															{this
+																.state
+																.editObj ===
+															'' ? (
+																<Tooltip
+																	title="Edit"
+																	placement="top"
 																>
-																	<EditIcon />
-																</Button>
-															</Tooltip>
-														) : this.state.editObj.appCd === app.appCd ? (
-															<div>
-																<Tooltip title="Save" placement="top">
 																	<Button
 																		variant="fab"
 																		mini
-																		onClick={() => this.handleOnSaveEdit(app.appCd)}
+																		onClick={() =>
+																			this.handleOpenEdit(
+																				app.appCd
+																			)
+																		}
 																	>
-																		<SaveIcon />
+																		<EditIcon />
 																	</Button>
 																</Tooltip>
-																<Tooltip title="Cancel" placement="top">
-																	<Button
-																		variant="fab"
-																		mini
-																		onClick={() => this.handleOnCloseEdit()}
+															) : this
+																.state
+																.editObj
+																.appCd ===
+															app.appCd ? (
+																<div>
+																	<Tooltip
+																		title="Save"
+																		placement="top"
 																	>
-																		<CancelIcon />
-																	</Button>
-																</Tooltip>
-															</div>
-														) : (
-															''
-														)}
-													</TableCell>
-												</TableRow>
-											))}
+																		<Button
+																			variant="fab"
+																			mini
+																			onClick={() =>
+																				this.handleOnSaveEdit(
+																					app.appCd
+																				)
+																			}
+																		>
+																			<SaveIcon />
+																		</Button>
+																	</Tooltip>
+																	<Tooltip
+																		title="Cancel"
+																		placement="top"
+																	>
+																		<Button
+																			variant="fab"
+																			mini
+																			onClick={() =>
+																				this.handleOnCloseEdit()
+																			}
+																		>
+																			<CancelIcon />
+																		</Button>
+																	</Tooltip>
+																</div>
+															) : (
+																''
+															)}
+														</TableCell>
+													</TableRow>
+												)
+											)}
 										</TableBody>
 									</Table>
 								</Paper>

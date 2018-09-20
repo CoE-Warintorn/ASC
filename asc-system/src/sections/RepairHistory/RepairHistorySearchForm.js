@@ -11,9 +11,7 @@ import {
 	Select,
 	MenuItem,
 	InputAdornment,
-	IconButton,
-	FormControlLabel,
-	Checkbox
+	IconButton
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 
@@ -116,7 +114,14 @@ const RepairHistorySearchForm = ({ ...props }) => {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<TextField label="Detail" multiline rows="4" value={search.detail} onChange={handleOnChange('search', 'detail')} fullWidth />
+						<TextField
+							label="Detail"
+							multiline
+							rows="4"
+							value={search.detail}
+							onChange={handleOnChange('search', 'detail')}
+							fullWidth
+						/>
 					</Grid>
 				</Grid>
 			</Grid>

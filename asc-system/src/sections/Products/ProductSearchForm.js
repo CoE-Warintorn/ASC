@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Typography, TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
-import { SearchSelectField } from '../../components';
-
 const styles = theme => ({
 	root: {
 		padding: '2%'

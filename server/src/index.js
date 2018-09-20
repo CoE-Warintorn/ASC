@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const pool = mysql.createPool({
     host    : 'localhost',
-    user    : 'root',
+    user    : 'newuser',
     password: '1234',
     database: 'db_asc'
 });
@@ -38,7 +38,7 @@ router.route('/authenticate')
             from		TB_USR_CTL \
             where		username = ? \
                 and     now() <= endDate \
-                and     adminInd = 1',
+                and     adminInd = "y"',
             username,
             function (error, result) {
                 if (error) 

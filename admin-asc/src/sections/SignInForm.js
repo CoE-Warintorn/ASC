@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {
-	Button,
-	Card,
-	CardHeader,
-	CardContent,
-	CardActions,
-	Divider,
-	TextField,
-	Grid,
-	Typography
-} from '@material-ui/core';
-import { Done as DoneIcon, AccountCircle as AccountIcon, LockOutline as LockIcon } from '@material-ui/icons';
+import { Button, Card, CardHeader, CardContent, CardActions, Divider, TextField, Grid, Typography } from '@material-ui/core';
+import { Done as DoneIcon, AccountCircle as AccountIcon, Lock as LockIcon } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 
 const styles = theme => ({

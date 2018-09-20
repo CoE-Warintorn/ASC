@@ -28,7 +28,6 @@ import {
 } from '@material-ui/core';
 import { AddCircleOutline as AddIcon, Check as YesIcon, Close as NoIcon } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
-import _ from 'lodash';
 
 import { Header } from '../../components';
 import { ProductSearchForm } from '../../sections';

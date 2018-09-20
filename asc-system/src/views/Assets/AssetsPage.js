@@ -323,8 +323,8 @@ class AssetsPage extends Component {
 	};
 
 	render() {
-		const { classes, match } = this.props;
-		const { search, dialog, product } = this.state;
+		const { classes } = this.props;
+		const { dialog, product } = this.state;
 
 		const headerButtons = (
 			<Button onClick={this.handleDialogToggle} className={classes.rightButton}>
