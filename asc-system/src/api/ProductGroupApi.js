@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { ip } from 'ip';
 
 const getProductGroup = (token, callback) => {
 	return axios
-		.get(`http://localhost:4000/api/productgroups`, { headers: { 'x-access-token': token } })
+		.get(`${ip}/api/productgroups`, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list));
 };
 
 const createProductGroup = (token, usn, pg, callback) => {
 	axios
-		.post(`http://localhost:4000/api/productgroups`, { usn, pg }, { headers: { 'x-access-token': token } })
+		.post(`${ip}/api/productgroups`, { usn, pg }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});
@@ -16,7 +17,7 @@ const createProductGroup = (token, usn, pg, callback) => {
 
 const updateProductGroup = (token, usn, pg, callback) => {
 	axios
-		.put(`http://localhost:4000/api/productgroups`, { usn, pg }, { headers: { 'x-access-token': token } })
+		.put(`${ip}/api/productgroups`, { usn, pg }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});

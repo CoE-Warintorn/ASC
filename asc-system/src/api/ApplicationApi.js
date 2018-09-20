@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { ip } from 'ip';
 
 const getApplication = (token, callback) => {
 	return axios
-		.get(`http://localhost:4000/api/applications`, { headers: { 'x-access-token': token } })
+		.get(`${ip}/api/applications`, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list));
 };
 
 const createApplication = (token, usn, app, callback) => {
 	axios
-		.post(`http://localhost:4000/api/applications`, { usn, app }, { headers: { 'x-access-token': token } })
+		.post(`${ip}/api/applications`, { usn, app }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});
@@ -16,7 +17,7 @@ const createApplication = (token, usn, app, callback) => {
 
 const updateApplication = (token, usn, app, callback) => {
 	axios
-		.put(`http://localhost:4000/api/applications`, { usn, app }, { headers: { 'x-access-token': token } })
+		.put(`${ip}/api/applications`, { usn, app }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});

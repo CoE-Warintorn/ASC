@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { ip } from 'ip';
 
 const authenticate = (username, password, callback) => {
-	axios.post('http://localhost:4000/api/authenticate', { username, password }).then(res => {
+	axios.post(`${ip}/api/authenticate`, { username, password }).then(res => {
 		if (res.data.success) callback(false, res.data.token);
 		else callback(res.data.error, false);
 	});
@@ -9,13 +10,13 @@ const authenticate = (username, password, callback) => {
 
 const getUsers = token => {
 	return axios
-		.get(`http://localhost:4000/api/admin/users`, { headers: { 'x-access-token': token } })
+		.get(`${ip}/api/admin/users`, { headers: { 'x-access-token': token } })
 		.then(res => res.data.list);
 };
 
 const createUser = (token, usn, user, callback) => {
 	axios
-		.post(`http://localhost:4000/api/admin/users`, { usn, user }, { headers: { 'x-access-token': token } })
+		.post(`${ip}/api/admin/users`, { usn, user }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});
@@ -23,7 +24,7 @@ const createUser = (token, usn, user, callback) => {
 
 const updateUser = (token, usn, user, callback) => {
 	axios
-		.put(`http://localhost:4000/api/admin/users`, { usn, user }, { headers: { 'x-access-token': token } })
+		.put(`${ip}/api/admin/users`, { usn, user }, { headers: { 'x-access-token': token } })
 		.then(res => {
 			callback(res.data.error, res.data.success);
 		});

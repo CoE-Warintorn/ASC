@@ -1,25 +1,26 @@
 import axios from 'axios';
+import { ip } from 'ip';
 
 const getProduct = (token, pdCd, callback) => {
 	return axios
-		.get(`http://localhost:4000/api/products/${pdCd}`, { headers: { 'x-access-token': token } })
+		.get(`${ip}/api/products/${pdCd}`, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list[0]));
 };
 
 const searchProduct = (token, pd, callback) => {
 	return axios
-		.post(`http://localhost:4000/api/products/search`, { pd }, { headers: { 'x-access-token': token } })
+		.post(`${ip}/api/products/search`, { pd }, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list));
 };
 
 const createProduct = (token, usn, pd, callback) => {
-	axios.post(`http://localhost:4000/api/products`, { usn, pd }, { headers: { 'x-access-token': token } }).then(res => {
+	axios.post(`${ip}/api/products`, { usn, pd }, { headers: { 'x-access-token': token } }).then(res => {
 		callback(res.data.error, res.data.success);
 	});
 };
 
 const updateProduct = (token, usn, pd, callback) => {
-	axios.put(`http://localhost:4000/api/products`, { usn, pd }, { headers: { 'x-access-token': token } }).then(res => {
+	axios.put(`${ip}/api/products`, { usn, pd }, { headers: { 'x-access-token': token } }).then(res => {
 		callback(res.data.error, res.data.success);
 	});
 };

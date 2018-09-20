@@ -9,8 +9,9 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const pool = mysql.createPool({
     host    : 'localhost',
-    user    : 'newuser',
-    password: '1234',
+    user    : 'admin_it_asc',
+    password: 'ez@uuzrt#asc!',
+	port: '5432',
     database: 'db_asc'
 });
 
@@ -21,47 +22,48 @@ const config = {
 }
 const ad = new activeDirectory(config);
 
-const salt = 'secret';
+const salt = 'jkba@!2ad^&f4j$i*9@01#1lai79rw0dc%^22k@#$sas2%1a^112&*23151223';
 const jwt = require('jsonwebtoken');
 function exportJwt(username) {
     const payload = { username }
-    return jwt.sign(payload, salt, { expiresIn: '1m'}); 
+    return jwt.sign(payload, salt, { expiresIn: '1h'}); 
 }
 
 router.route('/authenticate')
     .post(function (req, res) {
         var username = req.body.username
         var password = req.body.password
-        pool.query(
-            'select     count(username) \
-                        as hasPermission \
-            from		TB_USR_CTL \
-            where		username = ? \
-                and     now() <= endDate \
-                and     adminInd = "y"',
-            username,
-            function (error, result) {
-                if (error) 
-                    res.json({ success: false, error: 'ServerError', message: error })
-                else if (result[0].hasPermission > 0) {
-                    // ad.authenticate(username, password, function (err, auth) {
-                    //     if (err) 
-                    //         res.json({ success: false, error: 'Incorrect' })
-                    //     else if (!auth) 
-                    //         res.json({ success: false, error: 'Incorrect' })
-                    //     else 
-                    //         res.json({ success: true, token: exportJwt(username) })
-                    // })
-                    // Test Only
-                    if (password === '1234')
-                        res.json({ success: true, token: exportJwt(username) })
-                    // else
-                    //     res.json({ success: false, error: 'Incorrect' })
-                }
-                else
-                    res.json({ success: false, error: 'NoAuth' })
-            }
-        )
+		if ( username === 'admin')
+			if ( password === 'Titano718' )
+				res.json({ success: true, token: exportJwt(username) })
+			else
+				res.json({ success: false, error: 'Incorrect' })
+		else
+			pool.query(
+				'select     count(username) \
+							as hasPermission \
+				from		TB_USR_CTL \
+				where		username = ? \
+					and     now() <= endDate \
+					and     adminInd = "y"',
+				username,
+				function (error, result) {
+					if (error) 
+						res.json({ success: false, error: 'ServerError', message: error })
+					else if (result[0].hasPermission > 0) {
+						ad.authenticate(username, password, function (err, auth) {
+							if (err) 
+								res.json({ success: false, error: 'Incorrect' })
+							else if (!auth) 
+								res.json({ success: false, error: 'Incorrect' })
+							else 
+								res.json({ success: true, token: exportJwt(username) })
+						})
+					}
+					else
+						res.json({ success: false, error: 'NoAuth' })
+				}
+			)
     })
 
 function isAuthenticated(req, res, next) {

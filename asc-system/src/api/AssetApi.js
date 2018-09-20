@@ -1,25 +1,26 @@
 import axios from 'axios';
+import { ip } from 'ip';
 
 const getAsset = (token, astCd, callback) => {
 	return axios
-		.get(`http://localhost:4000/api/assets/${astCd}`, { headers: { 'x-access-token': token } })
+		.get(`${ip}/api/assets/${astCd}`, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list[0]));
 };
 
 const searchAsset = (token, ast, callback) => {
 	return axios
-		.post(`http://localhost:4000/api/assets/search`, { ast }, { headers: { 'x-access-token': token } })
+		.post(`${ip}/api/assets/search`, { ast }, { headers: { 'x-access-token': token } })
 		.then(res => callback(res.data.error, res.data.list));
 };
 
 const createAsset = (token, usn, ast, callback) => {
-	axios.post(`http://localhost:4000/api/assets`, { usn, ast }, { headers: { 'x-access-token': token } }).then(res => {
+	axios.post(`${ip}/api/assets`, { usn, ast }, { headers: { 'x-access-token': token } }).then(res => {
 		callback(res.data.error, res.data.success);
 	});
 };
 
 const updateAsset = (token, usn, ast, callback) => {
-	axios.put(`http://localhost:4000/api/assets`, { usn, ast }, { headers: { 'x-access-token': token } }).then(res => {
+	axios.put(`${ip}/api/assets`, { usn, ast }, { headers: { 'x-access-token': token } }).then(res => {
 		callback(res.data.error, res.data.success);
 	});
 };
