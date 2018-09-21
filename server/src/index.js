@@ -10,12 +10,12 @@ const pool = require('./connector');
 
 const activeDirectory = require('activedirectory2');
 const config = {
-    url: 'ldap://192.168.77.2:389',
-    baseDN: 'OU=IT,OU=FAC-HDY,OU=Factory,OU=Haadthip,DC=haadthip,DC=com'
+    url: '',
+    baseDN: ''
 }
 const ad = new activeDirectory(config);
 
-const salt = 'jkba@!2ad^&f4j$i*9@01#1lai79rw0dc%^22k@#$sas2%1a^112&*23151223';
+const salt = '';
 const jwt = require('jsonwebtoken');
 function exportJwt(username) {
     const payload = { username }
@@ -28,7 +28,7 @@ router.route('/authenticate')
 		var password = req.body.password
 		
 		if ( username === 'admin')
-			if ( password === 'Titano718' )
+			if ( password === '1234' )
 				res.json({ success: true, token: exportJwt(username) })
 			else
 				res.json({ success: false, error: 'Incorrect' })
@@ -45,14 +45,15 @@ router.route('/authenticate')
 					if (error) 
 						res.json({ success: false, error: 'ServerError', message: error })
 					else if (result[0].hasPermission > 0) {
-						ad.authenticate(username, password, function (err, auth) {
-							if (err) 
-								res.json({ success: false, error: 'Incorrect' })
-							else if (!auth) 
-								res.json({ success: false, error: 'Incorrect' })
-							else 
-								res.json({ success: true, token: exportJwt(username) })
-						})
+						// ad.authenticate(username, password, function (err, auth) {
+						// 	if (err) 
+						// 		res.json({ success: false, error: 'Incorrect' })
+						// 	else if (!auth) 
+						// 		res.json({ success: false, error: 'Incorrect' })
+						// 	else 
+						// 		res.json({ success: true, token: exportJwt(username) })
+						// })
+						res.json({ success: true, token: exportJwt(username) })
 					}
 					else
 						res.json({ success: false, error: 'NoAuth' })
