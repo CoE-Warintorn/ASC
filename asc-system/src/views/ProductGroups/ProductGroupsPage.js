@@ -148,7 +148,12 @@ class ProductGroupsPage extends Component {
 					alert('Add Product Group Success!');
 					this.handleDialogToggle();
 					(async () => {
-						let pgList = await getProductGroup(this.props.auth.token);
+						let pgList = await getProductGroup(this.props.auth.token, (err, result) => {
+							if (err)
+								if (err === 'TimeOut') this.props.signout();
+								else alert(JSON.stringify(err));
+							else return result;
+						});
 						this.setState({
 							...this.state,
 							pgList
@@ -186,9 +191,13 @@ class ProductGroupsPage extends Component {
 				await updateProductGroup(this.props.auth.token, this.props.auth.usn, { pgCd, pgName }, (err, success) => {
 					if (err) alert(JSON.stringify(err));
 					else alert('Updated');
-					return;
 				});
-				let pgList = await getProductGroup(this.props.auth.token);
+				let pgList = await getProductGroup(this.props.auth.token, (err, result) => {
+					if (err)
+						if (err === 'TimeOut') this.props.signout();
+						else alert(JSON.stringify(err));
+					else return result;
+				});
 				this.setState({
 					...this.state,
 					pgList,

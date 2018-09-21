@@ -138,7 +138,12 @@ class DivisionsPage extends Component {
 					alert('Add Division Success!');
 					this.handleDialogToggle();
 					(async () => {
-						let divList = await getDivision(this.props.auth.token);
+						let divList = await getDivision(this.props.auth.token, (err, result) => {
+							if (err)
+								if (err === 'TimeOut') this.props.signout();
+								else alert(JSON.stringify(err));
+							else return result;
+						});
 						this.setState({
 							...this.state,
 							divList
@@ -176,9 +181,13 @@ class DivisionsPage extends Component {
 				await updateDivision(this.props.auth.token, this.props.auth.usn, { divCd, divName }, (err, success) => {
 					if (err) alert(JSON.stringify(err));
 					else alert('Updated');
-					return;
 				});
-				let divList = await getDivision(this.props.auth.token);
+				let divList = await getDivision(this.props.auth.token, (err, result) => {
+					if (err)
+						if (err === 'TimeOut') this.props.signout();
+						else alert(JSON.stringify(err));
+					else return result;
+				});
 				this.setState({
 					...this.state,
 					divList,
