@@ -169,6 +169,7 @@ class ManagementPage extends Component {
 						if (success) {
 							alert('Add User Success');
 							this.handleOnToggle('dialog', 'open')();
+							this.componentDidMount();
 						} else if (err === 'TimeOut') this.props.signout();
 						else if (err === 'Exist') alert('Username already exists');
 						else alert(JSON.stringify(err));
